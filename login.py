@@ -30,10 +30,11 @@ def login(username, password):
     return response
 
 
-def create_token(username, admin):
+def create_token(obj):
     payload = {
-        'username': username,
-        'admin': admin,
+        'id': obj['id'],
+        'username': obj['username'],
+        'admin': obj['admin'],
         'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=15)
     }
     token = (jwt.encode(payload, JWT_SECRET, algorithm='HS256'))
@@ -55,6 +56,6 @@ def main(event, context):
         return login_response
     else:
         # Create token
-        token = create_token(username, login_response['admin'])
+        token = create_token(login_response)
         login_response['token'] = token
         return login_response
