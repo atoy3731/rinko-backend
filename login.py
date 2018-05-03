@@ -7,7 +7,7 @@ import psycopg2
 JWT_SECRET='[o$wEKG*QDM^M.&&Gf[l!OW~xs_|]i}9}NR92Yay,FBEh!kq"cc7z"M-1Tu`ujz'
 
 try:
-    conn = psycopg2.connect("dbname='rinko' user='postgres' host='localhost' password='postgres'")
+    conn = psycopg2.connect("dbname='rinko' user='rinko' host='localhost' password='rinko'")
 except:
     print "I am unable to connect to the database"
 

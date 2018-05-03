@@ -1,0 +1,7 @@
+flask
+Flask-Cors
+flask-restplus
+psycopg2
+werkzeug
+bcrypt
+pyjwt

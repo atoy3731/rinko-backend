@@ -1,7 +1,7 @@
 import psycopg2
 
 try:
-    conn = psycopg2.connect("dbname='rinko' user='postgres' host='localhost' password='postgres'")
+    conn = psycopg2.connect("dbname='rinko' user='rinko' host='localhost' password='rinko'")
 except:
     print "I am unable to connect to the database"
 
@@ -22,7 +22,7 @@ def get_count_query(event):
     # Filter by team_id if desired
     if "team" in event and event["team"] is not None:
         filter_by_team = True
-        query += "JOIN team_rosters ON (players.id = team_rosters.player_id) WHERE team_id = '{}' ".format(event['team'])
+        query += "JOIN rosters ON (players.id = rosters.player_id) WHERE team_id = '{}' ".format(event['team'])
 
     # First first and last name by name entry if desired
     if 'name' in event and event['name'] is not None:
@@ -56,7 +56,7 @@ def get_query(event):
     # Filter by team_id if desired
     if "team" in event and event["team"] is not None:
         filter_by_team = True
-        query += "JOIN team_rosters ON (players.id = team_rosters.player_id) WHERE team_id = '{}' ".format(event['team'])
+        query += "JOIN rosters ON (players.id = rosters.player_id) WHERE team_id = '{}' ".format(event['team'])
 
     # First first and last name by name entry if desired
     if 'name' in event and event['name'] is not None:

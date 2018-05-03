@@ -3,7 +3,7 @@ import traceback
 import psycopg2
 
 try:
-    conn = psycopg2.connect("dbname='rinko' user='postgres' host='localhost' password='postgres'")
+    conn = psycopg2.connect("dbname='rinko' user='rinko' host='localhost' password='rinko'")
 except:
     print "I am unable to connect to the database"
 

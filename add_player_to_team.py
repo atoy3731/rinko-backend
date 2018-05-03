@@ -3,13 +3,13 @@ import traceback
 import psycopg2
 
 try:
-    conn = psycopg2.connect("dbname='rinko' user='postgres' host='localhost' password='postgres'")
+    conn = psycopg2.connect("dbname='rinko' user='rinko' host='localhost' password='rinko'")
 except:
     print "I am unable to connect to the database"
 
 
 def player_exists(event):
-    query = "SELECT player_id FROM team_rosters where player_id = {} and team_id = {}".format(event['player_id'], event['team_id'])
+    query = "SELECT player_id FROM rosters where player_id = {} and team_id = {}".format(event['player_id'], event['team_id'])
     cur = conn.cursor()
     cur.execute(query)
     response = cur.fetchone() is not None
@@ -18,7 +18,7 @@ def player_exists(event):
     return response
 
 def get_insert_query(event):
-    query = "INSERT INTO team_rosters (player_id, team_id) VALUES ({}, {})".format(event['player_id'], event['team_id'])
+    query = "INSERT INTO rosters (player_id, team_id) VALUES ({}, {})".format(event['player_id'], event['team_id'])
     print(query)
     return query
 

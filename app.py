@@ -15,10 +15,21 @@ CORS(application)
 
 api = Api(
     application,
-    title='SG Microservice',
-    description="Kub.io's microservice for security groups.",
-    default='sg-service'
+    title='Rinko App',
+    description="Rinko App",
+    default='rinko-app'
 )
+
+@api.route('/login')
+class Login(Resource):
+    def post(self):
+        event = {
+            'username': request.args.get('username'),
+            'password': request.args.get('password')
+        }
+
+        response = login.main(event, {})
+        return response, 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
 
 @api.route('/api/players')
