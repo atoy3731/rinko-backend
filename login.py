@@ -1,5 +1,4 @@
-import re
-import traceback, bcrypt, jwt
+import bcrypt, jwt
 
 import datetime
 import psycopg2
@@ -13,17 +12,17 @@ except:
 
 
 def login(username, password):
-    query = "SELECT username, password, admin FROM users where LOWER(username) = '{}'".format(username)
     cur = conn.cursor()
-    cur.execute(query)
+    # cur.execute("""UPDATE teams SET rinko_points = %s WHERE id = %s""", (team_rinko_points, team_id))
+    cur.execute("""SELECT id, username, password, admin FROM users where username = %s""", [username])
 
     response = cur.fetchone()
 
     if response is None:
         return {'status': 'failed', 'error': 'user_not_exists_exception', 'message': 'User does not exist.'}
     else:
-        if bcrypt.hashpw(str(password).encode('utf-8'), response[1]) == response[1]:
-            return {'status': 'success', 'admin': response[2]}
+        if bcrypt.hashpw(str(password).encode('utf-8'), response[2]) == response[2]:
+            return {'status': 'success', 'username': username, 'id': response[0], 'admin': response[3]}
         else:
             return {'status': 'failed', 'error': 'invalid_password_exception', 'message': 'Invalid password.'}
     cur.close()
@@ -57,4 +56,5 @@ def main(event, context):
     else:
         # Create token
         token = create_token(username, login_response['admin'])
-        return {'status': 'success', 'token': token}
+        login_response['token'] = token
+        return login_response

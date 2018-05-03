@@ -20,16 +20,16 @@ api = Api(
     default='rinko-app'
 )
 
-@api.route('/login')
+@api.route('/api/login')
 class Login(Resource):
     def post(self):
-        event = {
-            'username': request.args.get('username'),
-            'password': request.args.get('password')
-        }
+        event = request.get_json()
 
         response = login.main(event, {})
-        return response, 200, {'Content-Type': 'text/plain; charset=utf-8'}
+        if response['status'] == 'failed':
+            return response, 401, {'Content-Type': 'text/plain; charset=utf-8'}
+        else:
+            return response, 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
 
 @api.route('/api/players')
